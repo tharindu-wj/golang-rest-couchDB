@@ -3,7 +3,7 @@ package utils
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/tharindu-wj/golang-couchdb/retuarantImporter/model"
+	"../model"
 	"io/ioutil"
 	"os"
 )

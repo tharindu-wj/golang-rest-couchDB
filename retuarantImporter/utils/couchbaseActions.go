@@ -1,8 +1,8 @@
 package utils
 
 import (
-	"github.com/tharindu-wj/golang-couchdb/couchBase"
-	"github.com/tharindu-wj/golang-couchdb/retuarantImporter/model"
+	"../../couchBase"
+	"../model"
 	"gopkg.in/couchbase/gocb.v1"
 )
 

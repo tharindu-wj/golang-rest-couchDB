@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/tharindu-wj/golang-couchdb/retuarantImporter/utils"
+	"./utils"
 )
 
 func main() {
