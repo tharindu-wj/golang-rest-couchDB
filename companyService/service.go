@@ -36,8 +36,11 @@ func main() {
 
 //get companies by 'branch_id'
 func GetCompaniesByBranchID(w http.ResponseWriter, r *http.Request) {
+
+	// Grab the parameter for the company
 	branchID := mux.Vars(r)["id"]
 
+	// New query, a really generic one with high selectivity
 	query := gocb.NewN1qlQuery("SELECT company.* FROM company WHERE branch_id = $1")
 	rows, _ := bucket.ExecuteN1qlQuery(query, []interface{}{branchID})
 
@@ -49,6 +52,9 @@ func GetCompaniesByBranchID(w http.ResponseWriter, r *http.Request) {
 	//  of structs
 	for rows.Next(&row) {
 		retValues = append(retValues, row)
+		// Set the row to an empty struct, to prevent current values
+		//  being added to the next row in the results collection
+		//  returned by the query
 		row = Company{}
 	}
 
@@ -58,16 +64,20 @@ func GetCompaniesByBranchID(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("ERROR PROCESSING STREAMING OUTPUT:", err)
 	}
 
+	// Return the JSON
 	w.Write(bytes)
 }
 
 //get companies by multiple 'branch_ids'
 func GetCompaniesByBranchIDs(w http.ResponseWriter, r *http.Request) {
+	// Grab the branch_id's for the company
 	r.ParseForm()
-
 	responseIds := r.Form.Get("ids")
+
+	//convert branch id's string to []string array
 	branchIDs := strings.Split(responseIds, ",")
 
+	// New query, a really generic one with high selectivity
 	query := gocb.NewN1qlQuery("SELECT company.* FROM company WHERE branch_id IN $1")
 	rows, _ := bucket.ExecuteN1qlQuery(query, []interface{}{branchIDs})
 
@@ -88,5 +98,6 @@ func GetCompaniesByBranchIDs(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("ERROR PROCESSING STREAMING OUTPUT:", err)
 	}
 
+	// Return the JSON
 	w.Write(bytes)
 }
