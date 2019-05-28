@@ -12,6 +12,7 @@ import (
 )
 
 type Company struct {
+	ID             string `json:"id"`
 	RestaurantID   string `json:"restaurant_id"`
 	RestaurantName string `json:"restaurant_name"`
 	CurrencyCode   string `json:"currency_code"`
@@ -41,7 +42,7 @@ func GetCompaniesByBranchID(w http.ResponseWriter, r *http.Request) {
 	branchID := mux.Vars(r)["id"]
 
 	// New query, a really generic one with high selectivity
-	query := gocb.NewN1qlQuery("SELECT company.* FROM company WHERE branch_id = $1")
+	query := gocb.NewN1qlQuery("SELECT company.*,META().id FROM company WHERE branch_id = $1")
 	rows, _ := bucket.ExecuteN1qlQuery(query, []interface{}{branchID})
 
 	// Interfaces for handling streaming return values
@@ -78,7 +79,7 @@ func GetCompaniesByBranchIDs(w http.ResponseWriter, r *http.Request) {
 	branchIDs := strings.Split(responseIds, ",")
 
 	// New query, a really generic one with high selectivity
-	query := gocb.NewN1qlQuery("SELECT company.* FROM company WHERE branch_id IN $1")
+	query := gocb.NewN1qlQuery("SELECT company.*,META().id FROM company WHERE branch_id IN $1")
 	rows, _ := bucket.ExecuteN1qlQuery(query, []interface{}{branchIDs})
 
 	// Interfaces for handling streaming return values
