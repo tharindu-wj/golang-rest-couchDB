@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "name": "Test API Gateway",
+  "port": 8000,
+  "cache_ttl": "3600s",
+  "timeout": "3s",
+  "extra_config": {},
+  "output_encoding": "json",
+  "endpoints": [
+    {
+      "endpoint": "/findNearbyRestaurants",
+      "backend": [
+        {
+          "is_collection": true,
+          "url_pattern": "/api/v1/geo",
+          "host": [
+            "http://localhost:3001"
+          ]
+        },
+        {
+          "is_collection": true,
+          "url_pattern": "/api/v1/companies/5678",
+          "host": [
+            "http://localhost:3000"
+          ]
+        }
+      ]
+    }
+  ]
+}

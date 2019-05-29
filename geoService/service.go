@@ -27,6 +27,14 @@ func main() {
 	subRouter.HandleFunc("/geo", GetGeoByLocation).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(":3001", router))
+	/*indexName := "geo-location"
+	query := gocb.NewSearchQuery(indexName, cbft.NewMatchQuery("32.806671")).
+		Limit(10)
+
+	res, _ := bucket.ExecuteSearchQuery(query)
+	for _, hit := range res.Hits() {
+		fmt.Println( hit)
+	}*/
 
 }
 
