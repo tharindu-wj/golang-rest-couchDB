@@ -8,6 +8,7 @@ import (
 	"gopkg.in/couchbase/gocb.v1"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 type Geo struct {
@@ -24,29 +25,25 @@ func main() {
 	router := mux.NewRouter().StrictSlash(true)
 	subRouter := router.PathPrefix("/api/v1").Subrouter()
 
-	subRouter.HandleFunc("/geo", GetGeoByLocation).Methods("GET")
+	subRouter.HandleFunc("/geo", GetGeoByLocation).Methods("POST")
 
 	log.Fatal(http.ListenAndServe(":3001", router))
-	/*indexName := "geo-location"
-	query := gocb.NewSearchQuery(indexName, cbft.NewMatchQuery("32.806671")).
-		Limit(10)
-
-	res, _ := bucket.ExecuteSearchQuery(query)
-	for _, hit := range res.Hits() {
-		fmt.Println( hit)
-	}*/
-
 }
 
 func GetGeoByLocation(w http.ResponseWriter, r *http.Request) {
-	// Grab the parameter for the company
-	//branchID := mux.Vars(r)["id"]
-	lat := 32.806671
-	lon := -86.79113
+	// Grab the current location
+	r.ParseForm()
+
+	lat, _ := strconv.ParseFloat(r.Form.Get("lat"), 64)
+	lon, _ := strconv.ParseFloat(r.Form.Get("lon"), 64)
+	distance, _ := strconv.ParseInt(r.Form.Get("distance"), 10, 64) //in miles
+
+	fmt.Println(lat, lon, distance)
+	fmt.Printf("%T, %T, %T", lat, lon, distance)
 
 	// New query, a really generic one with high selectivity
 	distanceCalc := fmt.Sprintf("(3959 * acos(cos(radians(%f)) * cos(radians(lat)) * cos( radians(lon) - radians(%f)) + sin(radians(32.816671)) *sin(radians(lat))))", lat, lon)
-	queryString := fmt.Sprintf("SELECT geo.lat,geo.lon,META().id, %s AS distance FROM geo where %s < 15 ORDER BY distance", distanceCalc, distanceCalc)
+	queryString := fmt.Sprintf("SELECT geo.lat,geo.lon,META().id, %s AS distance FROM geo where %s < %d ORDER BY distance", distanceCalc, distanceCalc, distance)
 	query := gocb.NewN1qlQuery(queryString)
 
 	rows, _ := bucket.ExecuteN1qlQuery(query, []interface{}{})
