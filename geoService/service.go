@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/tharindu-wj/golang-rest-couchDB/packages/models"
-	"github.com/tharindu-wj/golang-rest-couchDB/packages/couchBase"
+	"github.com/tharindu-wj/golang-rest-couchDB/helpers/models"
+	"github.com/tharindu-wj/golang-rest-couchDB/helpers/couchBase"
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
