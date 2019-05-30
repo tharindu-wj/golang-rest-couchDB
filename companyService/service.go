@@ -1,7 +1,8 @@
 package main
 
 import (
-	"../couchBase"
+	"github.com/tharindu-wj/golang-rest-couchDB/packages/models"
+	"github.com/tharindu-wj/golang-rest-couchDB/packages/couchBase"
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
@@ -10,15 +11,6 @@ import (
 	"net/http"
 	"strings"
 )
-
-type Company struct {
-	ID             string `json:"id"`
-	RestaurantID   string `json:"restaurant_id"`
-	RestaurantName string `json:"restaurant_name"`
-	CurrencyCode   string `json:"currency_code"`
-	BranchID       string `json:"branch_id"`
-	BranchName     string `json:"branch_name"`
-}
 
 //get company bucket reference
 var bucket = couchBase.SelectBucket("company")
@@ -46,8 +38,8 @@ func GetCompaniesByBranchID(w http.ResponseWriter, r *http.Request) {
 	rows, _ := bucket.ExecuteN1qlQuery(query, []interface{}{branchID})
 
 	// Interfaces for handling streaming return values
-	var row Company
-	var retValues []Company
+	var row models.Company
+	var retValues []models.Company
 
 	// Stream the values returned from the query into a typed array
 	//  of structs
@@ -56,7 +48,7 @@ func GetCompaniesByBranchID(w http.ResponseWriter, r *http.Request) {
 		// Set the row to an empty struct, to prevent current values
 		//  being added to the next row in the results collection
 		//  returned by the query
-		row = Company{}
+		row = models.Company{}
 	}
 
 	// Marshal array of structs to JSON
@@ -83,14 +75,14 @@ func GetCompaniesByBranchIDs(w http.ResponseWriter, r *http.Request) {
 	rows, _ := bucket.ExecuteN1qlQuery(query, []interface{}{branchIDs})
 
 	// Interfaces for handling streaming return values
-	var row Company
-	var retValues []Company
+	var row models.Company
+	var retValues []models.Company
 
 	// Stream the values returned from the query into a typed array
 	//  of structs
 	for rows.Next(&row) {
 		retValues = append(retValues, row)
-		row = Company{}
+		row = models.Company{}
 	}
 
 	// Marshal array of structs to JSON

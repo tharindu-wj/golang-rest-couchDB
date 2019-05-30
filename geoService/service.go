@@ -1,7 +1,8 @@
 package main
 
 import (
-	"../couchBase"
+	"github.com/tharindu-wj/golang-rest-couchDB/packages/models"
+	"github.com/tharindu-wj/golang-rest-couchDB/packages/couchBase"
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
@@ -10,12 +11,6 @@ import (
 	"net/http"
 	"strconv"
 )
-
-type Geo struct {
-	ID        string  `json:"id"`
-	Longitude float64 `json:"lon"`
-	Latitude  float64 `json:"lat"`
-}
 
 //get company bucket reference
 var bucket = couchBase.SelectBucket("geo")
@@ -49,8 +44,8 @@ func GetGeoByLocation(w http.ResponseWriter, r *http.Request) {
 	rows, _ := bucket.ExecuteN1qlQuery(query, []interface{}{})
 
 	// Interfaces for handling streaming return values
-	var row Geo
-	var retValues []Geo
+	var row models.Geo
+	var retValues []models.Geo
 
 	// Stream the values returned from the query into a typed array
 	//  of structs
@@ -59,7 +54,7 @@ func GetGeoByLocation(w http.ResponseWriter, r *http.Request) {
 		// Set the row to an empty struct, to prevent current values
 		//  being added to the next row in the results collection
 		//  returned by the query
-		row = Geo{}
+		row = models.Geo{}
 	}
 
 	// Marshal array of structs to JSON
