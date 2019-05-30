@@ -25,6 +25,7 @@ func main() {
 
 }
 
+//insert companies to companies bucket
 func InsertCompanies(data models.Restaurants) bool {
 	var companies []gocb.BulkOp
 
@@ -51,6 +52,7 @@ func InsertCompanies(data models.Restaurants) bool {
 	}
 }
 
+//insert geo data to geo bucket
 func InsertGeoLocations(data models.Restaurants) bool {
 	var geoLocations []gocb.BulkOp
 
@@ -74,6 +76,7 @@ func InsertGeoLocations(data models.Restaurants) bool {
 	}
 }
 
+//read json file from cmd argument and return restaurant map
 func ImportJsonToRestaurants() models.Restaurants {
 	jsonFileName := os.Args[1]
 

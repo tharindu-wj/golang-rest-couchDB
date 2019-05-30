@@ -25,6 +25,7 @@ func main() {
 	log.Fatal(http.ListenAndServe(":3001", router))
 }
 
+//get geo locations by given location and distance range
 func GetGeoByLocation(w http.ResponseWriter, r *http.Request) {
 	// Grab the current location
 	r.ParseForm()
