@@ -45,8 +45,11 @@ func GetGeoByLocation(w http.ResponseWriter, r *http.Request) {
 	lon := -86.79113
 
 	// New query, a really generic one with high selectivity
-	query := gocb.NewN1qlQuery("SELECT geo.*,META().id FROM geo WHERE lat = $1 AND lon = $2")
-	rows, _ := bucket.ExecuteN1qlQuery(query, []interface{}{lat, lon})
+	distanceCalc := fmt.Sprintf("(3959 * acos(cos(radians(%f)) * cos(radians(lat)) * cos( radians(lon) - radians(%f)) + sin(radians(32.816671)) *sin(radians(lat))))", lat, lon)
+	queryString := fmt.Sprintf("SELECT geo.lat,geo.lon,META().id, %s AS distance FROM geo where %s < 15 ORDER BY distance", distanceCalc, distanceCalc)
+	query := gocb.NewN1qlQuery(queryString)
+
+	rows, _ := bucket.ExecuteN1qlQuery(query, []interface{}{})
 
 	// Interfaces for handling streaming return values
 	var row Geo
