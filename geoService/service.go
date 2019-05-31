@@ -35,8 +35,8 @@ func GetGeoByLocation(w http.ResponseWriter, r *http.Request) {
 	radius, _ := strconv.ParseInt(r.Form.Get("radius"), 10, 64) //in miles
 
 	// New query, a really generic one with high selectivity
-	distanceCalc := fmt.Sprintf("(3959 * acos(cos(radians(%f)) * cos(radians(lat)) * cos( radians(lon) - radians(%f)) + sin(radians(32.816671)) *sin(radians(lat))))", lat, lon)
-	queryString := fmt.Sprintf("SELECT geo.lat,geo.lon,META().id, %s AS distance FROM geo where %s < %d ORDER BY distance", distanceCalc, distanceCalc, radius)
+	radiusCalc := fmt.Sprintf("(3959 * acos(cos(radians(%f)) * cos(radians(lat)) * cos( radians(lon) - radians(%f)) + sin(radians(32.816671)) *sin(radians(lat))))", lat, lon)
+	queryString := fmt.Sprintf("SELECT geo.lat,geo.lon,META().id, %s AS distance FROM geo where %s < %d ORDER BY distance", radiusCalc, radiusCalc, radius)
 	query := gocb.NewN1qlQuery(queryString)
 
 	rows, _ := bucket.ExecuteN1qlQuery(query, []interface{}{})
