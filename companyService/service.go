@@ -1,11 +1,12 @@
 package main
 
 import (
-	"github.com/tharindu-wj/golang-rest-couchDB/shared/models"
-	"github.com/tharindu-wj/golang-rest-couchDB/shared/couchBase"
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
+	"github.com/tharindu-wj/golang-rest-couchDB/shared/couchBase"
+	"github.com/tharindu-wj/golang-rest-couchDB/shared/models"
 	"gopkg.in/couchbase/gocb.v1"
 	"log"
 	"net/http"
@@ -34,7 +35,7 @@ func GetCompaniesByBranchID(w http.ResponseWriter, r *http.Request) {
 	branchID := mux.Vars(r)["id"]
 
 	// New query, a really generic one with high selectivity
-	query := gocb.NewN1qlQuery("SELECT company.*,META().id FROM company WHERE META().id = $1")
+	query := gocb.NewN1qlQuery("SELECT company.*,META().id FROM company WHERE branch_id = $1")
 	rows, _ := bucket.ExecuteN1qlQuery(query, []interface{}{branchID})
 
 	// Interfaces for handling streaming return values
@@ -66,13 +67,29 @@ func GetCompaniesByBranchIDs(w http.ResponseWriter, r *http.Request) {
 	// Grab the branch_id's for the company
 	r.ParseForm()
 	responseIds := r.Form.Get("ids")
-
 	//convert branch id's string to []string array
 	branchIDs := strings.Split(responseIds, ",")
 
+	var queryPart bytes.Buffer
+	i := 1
+	itemLength := len(branchIDs)
+	for _, v := range branchIDs {
+		queryPart.WriteString(`"`)
+		queryPart.WriteString(v)
+		queryPart.WriteString(`"`)
+		if itemLength > i {
+			queryPart.WriteString(", ")
+		}
+		i++
+	}
+
+	//branchIDs := []string{"12345678", "14723698"}
+	fmt.Printf("%v", queryPart.String())
+
 	// New query, a really generic one with high selectivity
-	query := gocb.NewN1qlQuery("SELECT company.*,META().id FROM company WHERE META().id IN $1")
-	rows, _ := bucket.ExecuteN1qlQuery(query, []interface{}{branchIDs})
+	queryString := fmt.Sprintf("SELECT company.*,META().id FROM company WHERE META().id IN [%s]", queryPart.String())
+	query := gocb.NewN1qlQuery(queryString)
+	rows, _ := bucket.ExecuteN1qlQuery(query, []interface{}{})
 
 	// Interfaces for handling streaming return values
 	var row models.Company
