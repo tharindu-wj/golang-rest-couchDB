@@ -17,13 +17,6 @@
           "host": [
             "http://localhost:3001"
           ]
-        },
-        {
-          "is_collection": true,
-          "url_pattern": "/api/v1/companies/5678",
-          "host": [
-            "http://localhost:3000"
-          ]
         }
       ]
     }

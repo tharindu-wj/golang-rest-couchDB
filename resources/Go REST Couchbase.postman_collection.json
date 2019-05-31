@@ -1,0 +1,120 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Go REST Couchbase",
+		"_postman_id": "0180069c-0900-d181-3636-83c6c1805272",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get companies by branch id's",
+			"request": {
+				"url": "http://localhost:3000/api/v1/companies",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "ids",
+							"value": "5678,4567,7890",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get companies by branch id",
+			"request": {
+				"url": "http://localhost:3000/api/v1/companies/5678",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "ids",
+							"value": "5678,4567,7890",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Locations by distance",
+			"request": {
+				"url": "http://localhost:3001/api/v1/geo",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YXNkZjEyMzQ=",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "lat",
+							"value": "32.806671",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "lon",
+							"value": "-86.79113",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "distance",
+							"value": "1500",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Krakend ",
+			"request": {
+				"url": "http://localhost:8000/findNearbyRestaurants",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

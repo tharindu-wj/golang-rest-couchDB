@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/tharindu-wj/golang-rest-couchDB/helpers/models"
-	"github.com/tharindu-wj/golang-rest-couchDB/helpers/couchBase"
+	"github.com/tharindu-wj/golang-rest-couchDB/shared/models"
+	"github.com/tharindu-wj/golang-rest-couchDB/shared/couchBase"
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
@@ -33,9 +33,6 @@ func GetGeoByLocation(w http.ResponseWriter, r *http.Request) {
 	lat, _ := strconv.ParseFloat(r.Form.Get("lat"), 64)
 	lon, _ := strconv.ParseFloat(r.Form.Get("lon"), 64)
 	distance, _ := strconv.ParseInt(r.Form.Get("distance"), 10, 64) //in miles
-
-	fmt.Println(lat, lon, distance)
-	fmt.Printf("%T, %T, %T", lat, lon, distance)
 
 	// New query, a really generic one with high selectivity
 	distanceCalc := fmt.Sprintf("(3959 * acos(cos(radians(%f)) * cos(radians(lat)) * cos( radians(lon) - radians(%f)) + sin(radians(32.816671)) *sin(radians(lat))))", lat, lon)

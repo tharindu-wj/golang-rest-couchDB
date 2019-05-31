@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/tharindu-wj/golang-rest-couchDB/helpers/models"
-	"github.com/tharindu-wj/golang-rest-couchDB/helpers/couchBase"
+	"github.com/tharindu-wj/golang-rest-couchDB/shared/models"
+	"github.com/tharindu-wj/golang-rest-couchDB/shared/couchBase"
 	"gopkg.in/couchbase/gocb.v1"
 	"io/ioutil"
 	"os"
