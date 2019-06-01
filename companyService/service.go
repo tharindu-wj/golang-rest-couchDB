@@ -19,8 +19,12 @@ func main() {
 	router := mux.NewRouter().StrictSlash(true)
 	subRouter := router.PathPrefix("/api/v1").Subrouter()
 
-	subRouter.HandleFunc("/companies/{id}", GetCompaniesByBranchID).Methods("GET")
-	subRouter.HandleFunc("/companies", GetCompaniesByBranchIDs).Methods("POST")
+
+	subRouter.Path("/companies").Queries("ids", "{ids}").HandlerFunc(GetCompaniesByBranchIDs).Methods("GET")
+	subRouter.Path("/companies").HandlerFunc(GetCompaniesByBranchIDs)
+
+	subRouter.HandleFunc("/company/{id}", GetCompaniesByBranchID).Methods("GET")
+	//subRouter.HandleFunc("/companies", GetCompaniesByBranchIDs).Methods("POST")
 
 	log.Fatal(http.ListenAndServe(":3000", router))
 
@@ -64,8 +68,9 @@ func GetCompaniesByBranchID(w http.ResponseWriter, r *http.Request) {
 //get companies by multiple 'branch_ids'
 func GetCompaniesByBranchIDs(w http.ResponseWriter, r *http.Request) {
 	// Grab the branch_id's for the company
-	r.ParseForm()
-	responseIds := r.Form.Get("ids")
+	//r.ParseForm()
+	responseIds :=  r.FormValue("ids")
+	fmt.Printf(responseIds)
 
 	// New query, a really generic one with high selectivity
 	queryString := fmt.Sprintf(`SELECT company.*,META().id FROM company WHERE META().id IN %s`, responseIds)
@@ -92,3 +97,5 @@ func GetCompaniesByBranchIDs(w http.ResponseWriter, r *http.Request) {
 	// Return the JSON
 	w.Write(bytes)
 }
+
+//TODO need to impliment function to couchbase querybuilder
