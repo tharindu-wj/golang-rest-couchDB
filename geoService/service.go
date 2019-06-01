@@ -22,17 +22,22 @@ func main() {
 
 	subRouter.HandleFunc("/geo", GetGeoByLocation).Methods("POST")
 
+
+	subRouter.Path("/geo").Queries("lat", "{lat}").HandlerFunc(GetGeoByLocation).Methods("GET")
+	subRouter.Path("/geo").Queries("lon", "{lon}").HandlerFunc(GetGeoByLocation).Methods("GET")
+	subRouter.Path("/geo").Queries("radius", "{radius}").HandlerFunc(GetGeoByLocation).Methods("GET")
+	subRouter.Path("/geo").HandlerFunc(GetGeoByLocation).Methods("GET")
+
 	log.Fatal(http.ListenAndServe(":3001", router))
 }
 
 //get geo locations by given location and distance range
 func GetGeoByLocation(w http.ResponseWriter, r *http.Request) {
 	// Grab the current location
-	r.ParseForm()
 
-	lat, _ := strconv.ParseFloat(r.Form.Get("lat"), 64)
-	lon, _ := strconv.ParseFloat(r.Form.Get("lon"), 64)
-	radius, _ := strconv.ParseInt(r.Form.Get("radius"), 10, 64) //in miles
+	lat, _ := strconv.ParseFloat(r.FormValue("lat"), 64)
+	lon, _ := strconv.ParseFloat(r.FormValue("lon"), 64)
+	radius, _ := strconv.ParseInt(r.FormValue("radius"), 10, 64) //in miles
 
 	// New query, a really generic one with high selectivity
 	radiusCalc := fmt.Sprintf("(3959 * acos(cos(radians(%f)) * cos(radians(lat)) * cos( radians(lon) - radians(%f)) + sin(radians(32.816671)) *sin(radians(lat))))", lat, lon)

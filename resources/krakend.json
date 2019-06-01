@@ -8,20 +8,40 @@
   "output_encoding": "json",
   "endpoints": [
     {
-      "endpoint": "/findNearbyRestaurants",
+      "endpoint": "/findNearbyRestaurants/{lat}/{lon}/{radius}",
       "extra_config": {
         "github.com/devopsfaith/krakend/proxy": {
           "sequential": true
         }
       },
-      "method": "POST",
+      "method": "GET",
       "backend": [
         {
           "is_collection": true,
-          "url_pattern": "/api/v1/geo",
+          "url_pattern": "/api/v1/geo?lon={lon}&lat={lat}&radius={radius}",
           "host": [
             "http://localhost:3001"
-          ]
+          ],
+          "extra_config": {
+            "github.com/devopsfaith/krakend/proxy": {
+              "flatmap_filter": [
+                {
+                  "type": "move",
+                  "args": [
+                    "collection.*.id", "geoResult"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "is_collection": true,
+          "url_pattern": "/api/v1/company/{resp0_geoResult}",
+          "host": [
+            "http://localhost:3000"
+          ],
+          "group": "companyResult"
         }
       ]
     }

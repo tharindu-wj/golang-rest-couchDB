@@ -21,7 +21,7 @@ func main() {
 
 
 	subRouter.Path("/companies").Queries("ids", "{ids}").HandlerFunc(GetCompaniesByBranchIDs).Methods("GET")
-	subRouter.Path("/companies").HandlerFunc(GetCompaniesByBranchIDs)
+	subRouter.Path("/companies").HandlerFunc(GetCompaniesByBranchIDs).Methods("GET")
 
 	subRouter.HandleFunc("/company/{id}", GetCompaniesByBranchID).Methods("GET")
 	//subRouter.HandleFunc("/companies", GetCompaniesByBranchIDs).Methods("POST")
@@ -68,7 +68,6 @@ func GetCompaniesByBranchID(w http.ResponseWriter, r *http.Request) {
 //get companies by multiple 'branch_ids'
 func GetCompaniesByBranchIDs(w http.ResponseWriter, r *http.Request) {
 	// Grab the branch_id's for the company
-	//r.ParseForm()
 	responseIds :=  r.FormValue("ids")
 	fmt.Printf(responseIds)
 
