@@ -10,8 +10,29 @@
 		{
 			"name": "Get companies by branch id's",
 			"request": {
-				"url": "http://localhost:3000/api/v1/companies",
-				"method": "POST",
+				"url": {
+					"raw": "http://localhost:3000/api/v1/companies?ids=[\"12345678\",\"14723698\"]",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"companies"
+					],
+					"query": [
+						{
+							"key": "ids",
+							"value": "[\"12345678\",\"14723698\"]",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -37,7 +58,7 @@
 		{
 			"name": "Get companies by branch id",
 			"request": {
-				"url": "http://localhost:3000/api/v1/companies/12345678",
+				"url": "http://localhost:3000/api/v1/company/12345678",
 				"method": "GET",
 				"header": [
 					{
@@ -64,7 +85,40 @@
 		{
 			"name": "Get Locations by distance",
 			"request": {
-				"url": "http://localhost:3001/api/v1/geo",
+				"url": {
+					"raw": "http://localhost:3001/api/v1/geo?lon=-86.79113&lat=32.806671&radius=1500",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"geo"
+					],
+					"query": [
+						{
+							"key": "lon",
+							"value": "-86.79113",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "lat",
+							"value": "32.806671",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "radius",
+							"value": "1500",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -108,8 +162,8 @@
 		{
 			"name": "Krakend ",
 			"request": {
-				"url": "http://localhost:8000/findNearbyRestaurants",
-				"method": "POST",
+				"url": "http://localhost:8000/findNearbyRestaurants/32.806678/-86.79113/1500",
+				"method": "GET",
 				"header": [
 					{
 						"key": "Content-Type",
