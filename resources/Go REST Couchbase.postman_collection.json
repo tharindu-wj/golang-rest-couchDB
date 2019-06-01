@@ -24,7 +24,7 @@
 					"urlencoded": [
 						{
 							"key": "ids",
-							"value": "5678,4567,7890",
+							"value": "[\"12345678\",\"14723698\"]",
 							"description": "",
 							"type": "text"
 						}
@@ -37,7 +37,7 @@
 		{
 			"name": "Get companies by branch id",
 			"request": {
-				"url": "http://localhost:3000/api/v1/companies/5678",
+				"url": "http://localhost:3000/api/v1/companies/12345678",
 				"method": "GET",
 				"header": [
 					{
@@ -68,13 +68,13 @@
 				"method": "POST",
 				"header": [
 					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded",
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YXNkZjEyMzQ=",
 						"description": ""
 					},
 					{
-						"key": "Authorization",
-						"value": "Basic YWRtaW46YXNkZjEyMzQ=",
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
 						"description": ""
 					}
 				],
@@ -94,7 +94,7 @@
 							"type": "text"
 						},
 						{
-							"key": "distance",
+							"key": "radius",
 							"value": "1500",
 							"description": "",
 							"type": "text"
@@ -109,9 +109,37 @@
 			"name": "Krakend ",
 			"request": {
 				"url": "http://localhost:8000/findNearbyRestaurants",
-				"method": "GET",
-				"header": [],
-				"body": {},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "lat",
+							"value": "32.806671",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "lon",
+							"value": "-88",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "radius",
+							"value": "200",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
 				"description": ""
 			},
 			"response": []

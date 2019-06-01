@@ -33,8 +33,9 @@ func GetCompaniesByBranchID(w http.ResponseWriter, r *http.Request) {
 	branchID := mux.Vars(r)["id"]
 
 	// New query, a really generic one with high selectivity
-	query := gocb.NewN1qlQuery("SELECT company.*,META().id FROM company WHERE META().id = $1")
-	rows, _ := bucket.ExecuteN1qlQuery(query, []interface{}{branchID})
+	queryString := fmt.Sprintf(`SELECT company.*,META().id FROM company WHERE META().id = "%s"`, branchID)
+	query := gocb.NewN1qlQuery(queryString)
+	rows, _ := bucket.ExecuteN1qlQuery(query, []interface{}{})
 
 	// Interfaces for handling streaming return values
 	var row models.Company
@@ -67,7 +68,7 @@ func GetCompaniesByBranchIDs(w http.ResponseWriter, r *http.Request) {
 	responseIds := r.Form.Get("ids")
 
 	// New query, a really generic one with high selectivity
-	queryString := fmt.Sprintf("SELECT company.*,META().id FROM company WHERE META().id IN %s", responseIds)
+	queryString := fmt.Sprintf(`SELECT company.*,META().id FROM company WHERE META().id IN %s`, responseIds)
 	query := gocb.NewN1qlQuery(queryString)
 	rows, _ := bucket.ExecuteN1qlQuery(query, []interface{}{})
 
