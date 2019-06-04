@@ -1,0 +1,65 @@
+[
+  {
+    "restaurant_id": "1234",
+    "restaurant_name": "Pizzahut",
+    "currency_code": "$",
+    "branch_id": "5678",
+    "branch_name": "Alabama",
+    "lon": -86.791130,
+    "lat": 32.806671
+  },
+  {
+    "restaurant_id": "1472",
+    "restaurant_name": "KFC",
+    "currency_code": "$",
+    "branch_id": "3698",
+    "branch_name": "Alaska",
+    "lon": -152.404419,
+    "lat": 61.370716
+  },
+  {
+    "restaurant_id": "9876",
+    "restaurant_name": "Submarine",
+    "currency_code": "$",
+    "branch_id": "4567",
+    "branch_name": "Arizona",
+    "lon": -111.431221,
+    "lat": 33.729759
+  },
+  {
+    "restaurant_id": "3456",
+    "restaurant_name": "Mcdonalds",
+    "currency_code": "$",
+    "branch_id": "7890",
+    "branch_name": "California",
+    "lon": -119.681564,
+    "lat": 36.116203
+  },
+  {
+    "restaurant_id": "2343",
+    "restaurant_name": "KFC",
+    "currency_code": "$",
+    "branch_id": "7890",
+    "branch_name": "California",
+    "lon": -119.681564,
+    "lat": 36.116203
+  },
+  {
+    "restaurant_id": "6789",
+    "restaurant_name": "Pizzahut",
+    "currency_code": "$",
+    "branch_id": "5678",
+    "branch_name": "Alabama",
+    "lon": -86.791130,
+    "lat": 32.806671
+  },
+  {
+    "restaurant_id": "5500",
+    "restaurant_name": "Pizzahut",
+    "currency_code": "$",
+    "branch_id": "9980",
+    "branch_name": "Alabama",
+    "lon": -86.791130,
+    "lat": 32.806671
+  }
+]
