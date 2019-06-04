@@ -1,25 +1,31 @@
 package couchBase
 
 import (
-	"fmt"
-	"github.com/joho/godotenv"
+	"encoding/json"
 	"gopkg.in/couchbase/gocb.v1"
-	"os"
+	"io/ioutil"
 )
+
+type Auth struct {
+	Host     string `json:"host"`
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
 
 //couch cluster connection
 func Connection() *gocb.Cluster {
-	_ = godotenv.Load(".env")
-	username := os.Getenv("COUCHBASE_USERNAME")
-	password := os.Getenv("COUCHBASE_PASSWORD")
-	fmt.Println(username, password)
-	cluster, err := gocb.Connect("couchbase://127.0.0.1")
+
+	plan, _ := ioutil.ReadFile("auth.json")
+	var authentication Auth
+	err := json.Unmarshal(plan, &authentication)
+
+	cluster, err := gocb.Connect(authentication.Host)
 	if err != nil {
 		panic(err.Error())
 	}
 	err = cluster.Authenticate(gocb.PasswordAuthenticator{
-		Username: username,
-		Password: password,
+		Username: authentication.Username,
+		Password: authentication.Password,
 	})
 	if err != nil {
 		panic(err.Error())
