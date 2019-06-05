@@ -162,7 +162,7 @@
 		{
 			"name": "Krakend ",
 			"request": {
-				"url": "http://localhost:8000/findNearbyRestaurants/32.806678/-86.79113/1500",
+				"url": "http://localhost:8000/findNearbyRestaurants/32.806678/-86.79113/15",
 				"method": "GET",
 				"header": [
 					{
