@@ -29,7 +29,7 @@ couchbase credentials in `auth.json`
     Sample postman collection can be found in `/resources/Go REST Couchbase.postman_collection.json`
 
 ## Company Service
-- http://localhost:3000/api/v1/company//{id}
+- http://localhost:3000/api/v1/company/{id}
     - `GET`: get company by id
     
 - http://localhost:3000/api/v1/companies?ids={[ids]}
