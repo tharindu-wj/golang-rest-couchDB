@@ -61,5 +61,14 @@
     "branch_name": "Alabama",
     "lon": -86.791130,
     "lat": 32.806671
+  },
+  {
+    "restaurant_id": "5555",
+    "restaurant_name": "Pizzahut",
+    "currency_code": "$",
+    "branch_id": "9980",
+    "branch_name": "Alabama",
+    "lon": -86.791130,
+    "lat": 32.806671
   }
 ]

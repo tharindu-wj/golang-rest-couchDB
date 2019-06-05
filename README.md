@@ -10,7 +10,8 @@
     
     
 # Project Deployment
-Project consist with 3 binary files for each service. These files located in '/bin' folder
+Project consist with 3 binary files for each service. These files located in '/bin' folder. Before run those add
+couchbase credentials in `auth.json`
     
     * `companyService` : Run server on `localhost:3000` listen for company services
     * `geoService` : Run server on `localhost:3001` listen for geo services

@@ -69,7 +69,6 @@ func GetCompaniesByBranchID(w http.ResponseWriter, r *http.Request) {
 func GetCompaniesByBranchIDs(w http.ResponseWriter, r *http.Request) {
 	// Grab the branch_id's for the company
 	responseIds :=  r.FormValue("ids")
-	fmt.Printf(responseIds)
 
 	// New query, a really generic one with high selectivity
 	queryString := fmt.Sprintf(`SELECT company.*,META().id FROM company WHERE META().id IN %s`, responseIds)
