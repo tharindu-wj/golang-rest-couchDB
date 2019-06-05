@@ -8,34 +8,41 @@
 ## Couchbase Setup
     * Need to create two buckets in couchbase `company` and `geo`
     
+    
 # Project Deployment
+Project consist with 3 binary files for each service. These files located in '/bin' folder
+    
+    * `companyService` : Run server on `localhost:3000` listen for company services
+    * `geoService` : Run server on `localhost:3001` listen for geo services
+    * `restuarantImporter` : Import resturants data to couchDB. This needs valid json file with restuarants.
+       Example json can be found in `/resources/retuarants.json`
 
-## 
 
+#KrakenD Integration
 
-
+    * Run Krakend with `/resources/krakend.json`. Before run this `company` and `geo` services should be executed and 
+      open their ports
+    
+    
 # API Endpoints
-###Posts
-- http://localhost:3000/api/v1/posts
-    - `GET`: get posts
+
+## Company Service
+- http://localhost:3000/api/v1/company//{id}
+    - `GET`: get company by id
     
-- http://localhost:3000/api/v1/post/{id}
-    - `GET`: get post
+- http://localhost:3000/api/v1/companies?ids={[ids]}
+    - `GET`:get companies by multiple id's. ex:-`["12345678","14723698"]`
     
-- http://localhost:3000/api/v1/post/create
-    - `POST`: create post
+## Geo Service
+- http://localhost:3001/api/v1/geo?lon={lon}&lat={lat}&radius={radius}
+    - `GET`: get list of geo locations by certain range. ex:-`lon=-86.79113&lat=32.806671&radius=1500`
     
-- http://localhost:3000/api/v1/post/delete/{id}
-    - `DELETE`: delete post
     
-###Companies
-- http://localhost:3000/api/v1/companies
-    - `GET`: get list of companies
+## Krakend
+- http://localhost:8000/findNearbyRestaurants/{lon}/{lat}/{radius}
+    - `GET`: get company details near to given geo range.
     
-###Users
-- http://localhost:3000/api/v1/users
-    - `GET`: get users
     
-- http://localhost:3000/api/v1/user/create
-    - `POST`: create user
-  
+# Development
+    * All services source codes in `/src` folder
+    * Common package helper functions and models are in `shared` folder
