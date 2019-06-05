@@ -28,7 +28,7 @@
                 {
                   "type": "move",
                   "args": [
-                    "collection.*.id", "collection"
+                    "collection.0.id", "geoResult"
                   ]
                 }
               ]
@@ -37,7 +37,7 @@
         },
         {
           "is_collection": true,
-          "url_pattern": "/api/v1/company/{resp0_collection}",
+          "url_pattern": "/api/v1/companies?ids=['{resp0_geoResult}']",
           "host": [
             "http://localhost:3000"
           ]
