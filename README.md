@@ -19,7 +19,7 @@ couchbase credentials in `auth.json`
        Example json can be found in `/resources/retuarants.json`
 
 
-#KrakenD Integration
+# KrakenD Integration
 
     * Run Krakend with `/resources/krakend.json`. Before run this `company` and `geo` services should be executed and 
       open their ports
