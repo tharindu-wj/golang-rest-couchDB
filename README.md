@@ -26,6 +26,7 @@ couchbase credentials in `auth.json`
     
     
 # API Endpoints
+    Sample postman collection can be found in `/resources/Go REST Couchbase.postman_collection.json`
 
 ## Company Service
 - http://localhost:3000/api/v1/company//{id}
